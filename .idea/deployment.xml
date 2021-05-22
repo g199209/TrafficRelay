@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="UCloud (dadd89b3-9e88-4159-a2a0-c061c6413c78)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/TrafficRelay" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
