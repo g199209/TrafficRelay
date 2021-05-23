@@ -8,9 +8,11 @@ find_package(gflags REQUIRED)
 
 include_directories("/usr/include")
 include_directories("/usr/local/include")
+include_directories("/opt/homebrew/include")
 
 link_directories("/usr/lib")
 link_directories("/usr/local/lib")
+link_directories("/opt/homebrew/lib")
 
 # Set a default build type for single-configuration
 # CMake generators if no build type is set.
