@@ -20,8 +20,10 @@ ENDIF (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   set(CMAKE_CXX_FLAGS "-std=c++17 -Wall")
+  set(LINK_LIBRARIES gflags spdlog fmt)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -march=x86-64 -static-libgcc -static-libstdc++")
+  set(LINK_LIBRARIES libgflags.a libspdlog.a libfmt.a thread)
 else ()
   message(FATAL_ERROR "Unsupported Compiler! ${CMAKE_CXX_COMPILER_ID}")
 endif ()
@@ -38,4 +40,4 @@ add_executable(TrafficRelay
     relay_thread.cc
     main.cc)
 
-target_link_libraries(TrafficRelay libgflags.a libspdlog.a libfmt.a)
+target_link_libraries(TrafficRelay ${LINK_LIBRARIES})
