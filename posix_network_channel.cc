@@ -26,8 +26,16 @@ err_t PosixNetworkChannel::Start() {
   }
 
   if (ep_.dir_ == NetworkEndPoint::Dir::kDirListen) {
-    auto ret = ::bind(sock_, (struct sockaddr *)&ep_.sock_addr_,
-                      sizeof(ep_.sock_addr_));
+    int opt_val = 1;
+    auto ret = ::setsockopt(sock_, SOL_SOCKET, SO_REUSEPORT, &opt_val,
+                            sizeof(opt_val));
+    if (ret != 0) {
+      SPDLOG_ERROR("{} Reuse port error! errno: {}", ep_.str_, errno);
+      init_ret_ = RelayNetworkError;
+      return init_ret_;
+    }
+    ret = ::bind(sock_, (struct sockaddr *)&ep_.sock_addr_,
+                 sizeof(ep_.sock_addr_));
     if (ret != 0) {
       SPDLOG_ERROR("{} Bind error! errno: {}", ep_.str_, errno);
       init_ret_ = RelayNetworkError;
