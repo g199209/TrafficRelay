@@ -13,7 +13,7 @@ namespace Relay {
 class NetworkChannel {
  public:
   explicit NetworkChannel(const NetworkEndPoint& ep) : ep_(ep){};
-  ~NetworkChannel() = default;
+  virtual ~NetworkChannel() = default;
 
   NetworkChannel(const NetworkChannel&) = delete;
   NetworkChannel& operator=(const NetworkChannel&) = delete;
