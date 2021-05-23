@@ -18,18 +18,17 @@ IF (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Debug)
 ENDIF (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -march=native -static-libgcc -static-libstdc++")
-set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb -O0 ")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -ggdb -O3")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   set(CMAKE_CXX_FLAGS "-std=c++17 -Wall")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -march= -static-libgcc -static-libstdc++")
+  set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -march=x86-64 -static-libgcc -static-libstdc++")
 else ()
   message(FATAL_ERROR "Unsupported Compiler! ${CMAKE_CXX_COMPILER_ID}")
 endif ()
+
+set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb -O0 ")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -ggdb -O3")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 message(STATUS "Build on ${CMAKE_CXX_COMPILER_ID}")
 
