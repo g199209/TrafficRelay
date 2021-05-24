@@ -85,6 +85,7 @@ err_t PosixNetworkChannel::Send(const void *buf, size_t len) {
       SPDLOG_ERROR("{} Send error! errno: {}", ep_.str_, errno);
       return RelayNetworkError;
     }
+    SPDLOG_DEBUG("{} Send {} Bytes.", ep_.str_, n);
     len -= n;
     buf = (uint8_t *)buf + n;
   }
@@ -104,6 +105,7 @@ err_t PosixNetworkChannel::Recv(void *buf, size_t buf_size, size_t *len) {
     *len = 0;
     return RelayNetworkError;
   }
+  SPDLOG_DEBUG("{} Recv {} Bytes.", ep_.str_, n);
   *len = n;
 
   return RelayOK;
