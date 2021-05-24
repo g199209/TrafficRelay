@@ -47,9 +47,17 @@ err_t PosixNetworkChannel::Start() {
 
     struct sockaddr_in peer_addr;
     socklen_t peer_addr_len = sizeof(peer_addr);
-    fd_ = accept(sock_, (struct sockaddr *)&peer_addr, &peer_addr_len);
+    fd_ = ::accept(sock_, (struct sockaddr *)&peer_addr, &peer_addr_len);
     if (fd_ < 0) {
       SPDLOG_ERROR("{} Accept error! errno: {}", ep_.str_, errno);
+      init_ret_ = RelayNetworkError;
+      return init_ret_;
+    }
+
+    // Close listen socket
+    ret = ::close(sock_);
+    if (ret != 0) {
+      SPDLOG_ERROR("{} Close listen socket error! errno: {}", ep_.str_, errno);
       init_ret_ = RelayNetworkError;
       return init_ret_;
     }
