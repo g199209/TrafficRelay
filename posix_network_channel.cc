@@ -100,8 +100,15 @@ err_t PosixNetworkChannel::Recv(void *buf, size_t buf_size, size_t *len) {
   }
 
   auto n = ::read(fd_, buf, buf_size);
-  if (n < 0) {
-    SPDLOG_ERROR("{} Recv error! errno: {}", ep_.str_, errno);
+  if (n <= 0) {
+    // read return 0 means socket closed
+    // Ref:
+    // https://stackoverflow.com/questions/2416944/can-read-function-on-a-connected-socket-return-zero-bytes
+    if (n == 0) {
+      SPDLOG_WARN("{} Connection Closed by peer!", ep_.str_);
+    } else {
+      SPDLOG_ERROR("{} Recv error! errno: {}", ep_.str_, errno);
+    }
     *len = 0;
     return RelayNetworkError;
   }
